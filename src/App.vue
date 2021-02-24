@@ -10,13 +10,27 @@
 <script>
 import AsideMenu from "@/components/AsideMenu.vue";
 import MaskMap from "@/components/MaskMap.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "App",
+  data() {
+    return {
+    }
+  },
   components: {
     AsideMenu,
     MaskMap
   },
+  computed: {
+    ...mapGetters(['getLocation', 'getStores'])
+  },
+  methods: {
+  },
+  async mounted() {
+    await this.$store.dispatch('areaLocation/fetchLocations');
+    await this.$store.dispatch('pharmacies/fetchPharmacies');
+  }
 };
 </script>
 

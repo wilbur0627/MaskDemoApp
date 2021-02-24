@@ -1,28 +1,12 @@
-import { createStore } from 'vuex'
+import { createStore } from 'vuex';
+import areaLocation from './modules/areaLocation';
+import pharmacies from './modules/pharmacies';
+import getters from './getters';
 
 export default createStore({
-  state: {
-    currCity: "台北市",
-    currDistrict: "內湖區",
-    location: [],
-    stores: []
-  },
-  mutations: {
-    SET_CURRCITY(state, payload) {
-      state.currCity = payload;
-    },
-    SET_CURRDISTRICT(state, payload) {
-      state.currDistrict = payload;
-    },
-    SET_LOCATION(state, payload) {
-      state.location = payload;
-    },
-    SET_STORES(state, payload) {
-      state.stores = payload;
-    }
-  },
-  actions: {
-  },
   modules: {
-  }
+    areaLocation,
+    pharmacies
+  },
+  getters
 })
