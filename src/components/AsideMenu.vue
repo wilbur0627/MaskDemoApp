@@ -3,12 +3,20 @@
     <div class="wraps">
       <label>
         縣市：<select v-model="currCity">
-            <option v-for="city of getCityList" :key="city" :value="city">{{ city }}</option>
+          <option v-for="city of getCityList" :key="city" :value="city">
+            {{ city }}
+          </option>
         </select>
       </label>
       <label>
         行政區：<select v-model="currDistrict">
-            <option v-for="district of getDistrictList" :key="district.id" :value="district.name">{{ district.name }}</option>
+          <option
+            v-for="district of getDistrictList"
+            :key="district.id"
+            :value="district.name"
+          >
+            {{ district.name }}
+          </option>
         </select>
       </label>
     </div>
@@ -20,20 +28,20 @@
     </div>
 
     <ul class="store-lists">
-      <li class="store-info wraps">
-        <h1>ＸＸ藥局</h1>
+      <li class="store-info wraps" v-for="store of stores" :key="store.id">
+        <h1>{{ store.name }}</h1>
 
         <div class="mask-info">
           <i class="fas fa-head-side-mask"></i>
-          <span>大人口罩: 100 個</span>
+          <span>大人口罩: {{ store.mask_adult }} 個</span>
         </div>
 
         <div class="mask-info">
           <i class="fas fa-baby"></i>
-          <span>兒童口罩: 100 個</span>
+          <span>兒童口罩: {{ store.mask_child }} 個</span>
         </div>
 
-        <div class="mask-info">最後更新時間:</div>
+        <div class="mask-info">最後更新時間: {{ store.updated }}</div>
 
         <button class="btn-store-detail">
           <i class="fas fa-info-circle"></i>
@@ -45,39 +53,50 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "AsideMenu",
+  mounted() {
+      console.log(this.filteredStores)
+  },
   computed: {
-      ...mapGetters(['getCurrCity', 'getCurrDistrict', 'getCityList', 'getDistrictList']),
-      currCity: {
-          get() {
-              return this.getCurrCity;
-          },
-          set(value) {
-            this.fetchCurrCity(value);
-          }
+    ...mapGetters([
+      "getCurrCity",
+      "getCurrDistrict",
+      "getCityList",
+      "getDistrictList",
+      "filteredStores",
+    ]),
+    currCity: {
+      get() {
+        return this.getCurrCity;
       },
-      currDistrict: {
-          get() {
-              return this.getCurrDistrict;
-          },
-          set(value) {
-              this.fetchCurrDistrict(value);
-          }
-      }
+      set(value) {
+        this.fetchCurrCity(value);
+      },
+    },
+    currDistrict: {
+      get() {
+        return this.getCurrDistrict;
+      },
+      set(value) {
+        this.fetchCurrDistrict(value);
+      },
+    },
+    stores: {
+      get() {
+        return this.filteredStores;
+      },
+    },
   },
   watch: {
-      currCity() {
-          return this.currDistrict = this.getDistrictList[0].name;
-      }
+    currCity() {
+      return (this.currDistrict = this.getDistrictList[0].name);
+    },
   },
   methods: {
-      ...mapActions('areaLocation',[
-          'fetchCurrCity',
-          'fetchCurrDistrict'
-      ]),
-  }
+    ...mapActions("areaLocation", ["fetchCurrCity", "fetchCurrDistrict"]),
+  },
 };
 </script>
 <style lang="scss">
