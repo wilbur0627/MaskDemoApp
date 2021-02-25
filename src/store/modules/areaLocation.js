@@ -6,6 +6,8 @@ const areaLocation = {
         currCity: "臺北市",
         currDistrict: "內湖區",
         location: [],
+        keywords: '',
+        isIgnore: false
     },
     mutations: {
         SET_CURRCITY(state, payload) {
@@ -17,6 +19,12 @@ const areaLocation = {
         SET_LOCATION(state, payload) {
             state.location = payload;
         },
+        SET_KEYWORDS(state, payload) {
+            state.keywords = payload;
+        },
+        SET_IGNORE(state, payload) {
+            state.isIgnore = payload;
+        }
     },
     actions: {
         async fetchLocations({ commit }) {
