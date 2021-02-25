@@ -23,7 +23,7 @@ export default {
     MaskMap
   },
   computed: {
-    ...mapGetters(['getLocation', 'getStores'])
+    ...mapGetters(['getLocation', 'getStores', 'getCityList', 'getDistrictList'])
   },
   methods: {
   },

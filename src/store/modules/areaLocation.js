@@ -3,7 +3,7 @@ import { fetchLocations } from '@/api/areaLocations';
 const areaLocation = {
     namespaced: true,
     state: {
-        currCity: "台北市",
+        currCity: "臺北市",
         currDistrict: "內湖區",
         location: [],
     },
@@ -23,6 +23,12 @@ const areaLocation = {
             const data = await fetchLocations().then((res) => res.data);
             commit('SET_LOCATION', data);
         },
+        fetchCurrCity({ commit }, payload) {
+            commit('SET_CURRCITY', payload);
+        },
+        fetchCurrDistrict({ commit }, payload) {
+            commit('SET_CURRDISTRICT', payload);
+        }
     }
 }
 

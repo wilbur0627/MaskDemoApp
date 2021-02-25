@@ -2,13 +2,13 @@
   <div class="aside-menu">
     <div class="wraps">
       <label>
-        縣市：<select>
-          <option>台北市</option>
+        縣市：<select v-model="currCity">
+            <option v-for="city of getCityList" :key="city" :value="city">{{ city }}</option>
         </select>
       </label>
       <label>
-        行政區：<select>
-          <option>北投區</option>
+        行政區：<select v-model="currDistrict">
+            <option v-for="district of getDistrictList" :key="district.id" :value="district.name">{{ district.name }}</option>
         </select>
       </label>
     </div>
@@ -40,93 +40,44 @@
           看詳細資訊
         </button>
       </li>
-      <li class="store-info wraps">
-        <h1>ＸＸ藥局</h1>
-
-        <div class="mask-info">
-          <i class="fas fa-head-side-mask"></i>
-          <span>大人口罩: 100 個</span>
-        </div>
-
-        <div class="mask-info">
-          <i class="fas fa-baby"></i>
-          <span>兒童口罩: 100 個</span>
-        </div>
-
-        <div class="mask-info">最後更新時間:</div>
-
-        <button class="btn-store-detail">
-          <i class="fas fa-info-circle"></i>
-          看詳細資訊
-        </button>
-      </li>
-      <li class="store-info wraps">
-        <h1>ＸＸ藥局</h1>
-
-        <div class="mask-info">
-          <i class="fas fa-head-side-mask"></i>
-          <span>大人口罩: 100 個</span>
-        </div>
-
-        <div class="mask-info">
-          <i class="fas fa-baby"></i>
-          <span>兒童口罩: 100 個</span>
-        </div>
-
-        <div class="mask-info">最後更新時間:</div>
-
-        <button class="btn-store-detail">
-          <i class="fas fa-info-circle"></i>
-          看詳細資訊
-        </button>
-      </li>
-      <li class="store-info wraps">
-        <h1>ＸＸ藥局</h1>
-
-        <div class="mask-info">
-          <i class="fas fa-head-side-mask"></i>
-          <span>大人口罩: 100 個</span>
-        </div>
-
-        <div class="mask-info">
-          <i class="fas fa-baby"></i>
-          <span>兒童口罩: 100 個</span>
-        </div>
-
-        <div class="mask-info">最後更新時間:</div>
-
-        <button class="btn-store-detail">
-          <i class="fas fa-info-circle"></i>
-          看詳細資訊
-        </button>
-      </li>
-      <li class="store-info wraps">
-        <h1>ＸＸ藥局</h1>
-
-        <div class="mask-info">
-          <i class="fas fa-head-side-mask"></i>
-          <span>大人口罩: 100 個</span>
-        </div>
-
-        <div class="mask-info">
-          <i class="fas fa-baby"></i>
-          <span>兒童口罩: 100 個</span>
-        </div>
-
-        <div class="mask-info">最後更新時間:</div>
-
-        <button class="btn-store-detail">
-          <i class="fas fa-info-circle"></i>
-          看詳細資訊
-        </button>
-      </li>
     </ul>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 export default {
   name: "AsideMenu",
+  computed: {
+      ...mapGetters(['getCurrCity', 'getCurrDistrict', 'getCityList', 'getDistrictList']),
+      currCity: {
+          get() {
+              return this.getCurrCity;
+          },
+          set(value) {
+            this.fetchCurrCity(value);
+          }
+      },
+      currDistrict: {
+          get() {
+              return this.getCurrDistrict;
+          },
+          set(value) {
+              this.fetchCurrDistrict(value);
+          }
+      }
+  },
+  watch: {
+      currCity() {
+          return this.currDistrict = this.getDistrictList[0].name;
+      }
+  },
+  methods: {
+      ...mapActions('areaLocation',[
+          'fetchCurrCity',
+          'fetchCurrDistrict'
+      ]),
+  }
 };
 </script>
 <style lang="scss">
