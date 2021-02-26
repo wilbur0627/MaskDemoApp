@@ -2,14 +2,14 @@
   <div class="aside-menu">
     <div class="wraps">
       <label>
-        縣市：<select v-model="currCity">
+        縣市：<select v-model="currCity" :disabled="isIgnore">
           <option v-for="city of getCityList" :key="city" :value="city">
             {{ city }}
           </option>
         </select>
       </label>
       <label>
-        行政區：<select v-model="currDistrict">
+        行政區：<select v-model="currDistrict" :disabled="isIgnore">
           <option
             v-for="district of getDistrictList"
             :key="district.id"
@@ -21,9 +21,10 @@
       </label>
     </div>
     <div class="wraps">
+      <input v-model="ignore" type="checkbox" /><span>全台搜尋</span>
       <label>
         <i class="fas fa-search-location"></i> 關鍵字搜尋：
-        <input type="text" placeholder="請輸入關鍵字" />
+        <input v-model="keywords" type="text" placeholder="請輸入關鍵字" />
       </label>
     </div>
 
@@ -53,12 +54,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 export default {
   name: "AsideMenu",
-  mounted() {
-      console.log(this.filteredStores)
-  },
+  mounted() {},
   computed: {
     ...mapGetters([
       "getCurrCity",
@@ -66,6 +65,8 @@ export default {
       "getCityList",
       "getDistrictList",
       "filteredStores",
+      "getKeywords",
+      "isIgnore"
     ]),
     currCity: {
       get() {
@@ -88,6 +89,22 @@ export default {
         return this.filteredStores;
       },
     },
+    keywords: {
+      get() {
+        return this.getKeywords;
+      },
+      set(value) {
+        this.SET_KEYWORDS(value);
+      },
+    },
+    ignore: {
+        get() {
+            return this.isIgnore;
+        },
+        set(value) {
+            this.SET_IGNORE(value);
+        }
+    }
   },
   watch: {
     currCity() {
@@ -95,7 +112,16 @@ export default {
     },
   },
   methods: {
-    ...mapActions("areaLocation", ["fetchCurrCity", "fetchCurrDistrict"]),
+    // mapActions namespaced 作法
+    ...mapActions({
+      fetchCurrCity: "areaLocation/fetchCurrCity",
+      fetchCurrDistrict: "areaLocation/fetchCurrDistrict",
+    }),
+    // mapMutations namespaced 作法
+    ...mapMutations({
+      SET_KEYWORDS: "areaLocation/SET_KEYWORDS",
+      SET_IGNORE: "areaLocation/SET_IGNORE"
+    }),
   },
 };
 </script>
