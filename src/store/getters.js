@@ -8,15 +8,19 @@ const getters = {
     filteredStores: state => {
         if (getters.isIgnore(state)) {
             if (getters.getKeywords(state)) {
-                return getters.getStores(state).filter((data) => data.name.includes(getters.getKeywords(state)));
+                return getters.getStores(state)
+                    .filter((data) => data.name.includes(getters.getKeywords(state)));
             } else {
                 return [];
             }
         } else {
             if (getters.getKeywords(state)) {
-                return getters.getStores(state).filter((data) => data.county === getters.getCurrCity(state) && data.town === getters.getCurrDistrict(state)).filter((data) => data.name.includes(getters.getKeywords(state)));
+                return getters.getStores(state)
+                    .filter((data) => data.county === getters.getCurrCity(state) && data.town === getters.getCurrDistrict(state))
+                    .filter((data) => data.name.includes(getters.getKeywords(state)));
             } else {
-                return getters.getStores(state).filter((data) => data.county === getters.getCurrCity(state) && data.town === getters.getCurrDistrict(state));
+                return getters.getStores(state)
+                .filter((data) => data.county === getters.getCurrCity(state) && data.town === getters.getCurrDistrict(state));
             }
         }
     },

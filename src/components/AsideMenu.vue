@@ -2,14 +2,14 @@
   <div class="aside-menu">
     <div class="wraps">
       <label>
-        縣市：<select v-model="currCity" :disabled="isIgnore">
+        縣市：<select v-model="currCity" :disabled="ignore">
           <option v-for="city of getCityList" :key="city" :value="city">
             {{ city }}
           </option>
         </select>
       </label>
       <label>
-        行政區：<select v-model="currDistrict" :disabled="isIgnore">
+        行政區：<select v-model="currDistrict" :disabled="ignore">
           <option
             v-for="district of getDistrictList"
             :key="district.id"
@@ -21,7 +21,7 @@
       </label>
     </div>
     <div class="wraps">
-      <input v-model="ignore" type="checkbox" /><span>全台搜尋</span>
+      <input v-model="ignore" type="checkbox" class="ignoreAll" /><span style="font-size: 0.8rem">全台搜尋</span>
       <label>
         <i class="fas fa-search-location"></i> 關鍵字搜尋：
         <input v-model="keywords" type="text" placeholder="請輸入關鍵字" />
@@ -104,7 +104,7 @@ export default {
         set(value) {
             this.SET_IGNORE(value);
         }
-    }
+      }
   },
   watch: {
     currCity() {
@@ -121,10 +121,11 @@ export default {
     ...mapMutations({
       SET_KEYWORDS: "areaLocation/SET_KEYWORDS",
       SET_IGNORE: "areaLocation/SET_IGNORE"
-    }),
-  },
-};
+    })
+  }
+}
 </script>
+
 <style lang="scss">
 .aside-menu {
   width: 25%;
@@ -161,6 +162,9 @@ export default {
         padding: 2px 8px;
         line-height: 2;
         font-size: 1.2rem;
+      }
+      .ignoreAll {
+        display: inline;
       }
     }
   }
