@@ -21,7 +21,10 @@
       </label>
     </div>
     <div class="wraps">
-      <input v-model="ignore" type="checkbox" class="ignoreAll" /><span style="font-size: 0.8rem">全台搜尋</span>
+      <input v-model="ignore" type="checkbox" class="ignoreAll" /><span
+        style="font-size: 0.8rem"
+        >全台搜尋</span
+      >
       <label>
         <i class="fas fa-search-location"></i> 關鍵字搜尋：
         <input v-model="keywords" type="text" placeholder="請輸入關鍵字" />
@@ -44,7 +47,7 @@
 
         <div class="mask-info">最後更新時間: {{ store.updated }}</div>
 
-        <button class="btn-store-detail">
+        <button class="btn-store-detail" @click="openInfoBox">
           <i class="fas fa-info-circle"></i>
           看詳細資訊
         </button>
@@ -66,7 +69,8 @@ export default {
       "getDistrictList",
       "filteredStores",
       "getKeywords",
-      "isIgnore"
+      "isIgnore",
+      "getShowModal",
     ]),
     currCity: {
       get() {
@@ -98,13 +102,21 @@ export default {
       },
     },
     ignore: {
-        get() {
-            return this.isIgnore;
-        },
-        set(value) {
-            this.SET_IGNORE(value);
-        }
+      get() {
+        return this.isIgnore;
+      },
+      set(value) {
+        this.SET_IGNORE(value);
+      },
+    },
+    showModal: {
+      get() {
+        return this.getShowModal;
+      },
+      set(value) {
+        this.SET_SHOWMODAL(value);
       }
+    }
   },
   watch: {
     currCity() {
@@ -120,10 +132,14 @@ export default {
     // mapMutations namespaced 作法
     ...mapMutations({
       SET_KEYWORDS: "areaLocation/SET_KEYWORDS",
-      SET_IGNORE: "areaLocation/SET_IGNORE"
-    })
-  }
-}
+      SET_IGNORE: "areaLocation/SET_IGNORE",
+      SET_SHOWMODAL: "pharmacies/SET_SHOWMODAL"
+    }),
+    openInfoBox() {
+      this.showModal = !this.showModal;
+    }
+  },
+};
 </script>
 
 <style lang="scss">

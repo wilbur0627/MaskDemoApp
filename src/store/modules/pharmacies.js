@@ -3,11 +3,15 @@ import { fetchPharmacies } from '@/api/pharmacies';
 const pharmacies = {
     namespaced: true,
     state: {
-        stores: []
+        stores: [],
+        showModal: false
     },
     mutations: {
         SET_STORES(state, payload) {
             state.stores = payload;
+        },
+        SET_SHOWMODAL(state, paylaod) {
+            state.showModal = paylaod;
         }
     },
     actions: {

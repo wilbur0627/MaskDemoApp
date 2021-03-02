@@ -6,3 +6,10 @@ export function fetchPharmacies() {
         method: "get"
     });
 }
+
+export function fetchTest() {
+    return request({
+        url: "https://randomuser.me/api/",
+        method: "get"
+    })
+}

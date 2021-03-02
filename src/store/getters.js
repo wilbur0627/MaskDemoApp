@@ -19,12 +19,14 @@ const getters = {
                     .filter((data) => data.county === getters.getCurrCity(state) && data.town === getters.getCurrDistrict(state))
                     .filter((data) => data.name.includes(getters.getKeywords(state)));
             } else {
+                console.log(getters.getStores(state))
                 return getters.getStores(state)
                 .filter((data) => data.county === getters.getCurrCity(state) && data.town === getters.getCurrDistrict(state));
             }
         }
     },
     getKeywords: state => state.areaLocation.keywords,
-    isIgnore: state => state.areaLocation.isIgnore
+    isIgnore: state => state.areaLocation.isIgnore,
+    getShowModal: state => state.pharmacies.showModal
 }
 export default getters;
