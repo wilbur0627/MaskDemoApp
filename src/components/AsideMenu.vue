@@ -47,7 +47,7 @@
 
         <div class="mask-info">最後更新時間: {{ store.updated }}</div>
 
-        <button class="btn-store-detail" @click="openInfoBox">
+        <button class="btn-store-detail" @click="openInfoBox(store)">
           <i class="fas fa-info-circle"></i>
           看詳細資訊
         </button>
@@ -60,7 +60,8 @@
 import { mapGetters, mapActions, mapMutations } from "vuex";
 export default {
   name: "AsideMenu",
-  mounted() {},
+  mounted() {
+  },
   computed: {
     ...mapGetters([
       "getCurrCity",
@@ -71,6 +72,7 @@ export default {
       "getKeywords",
       "isIgnore",
       "getShowModal",
+      "getCurrStore"
     ]),
     currCity: {
       get() {
@@ -133,10 +135,12 @@ export default {
     ...mapMutations({
       SET_KEYWORDS: "areaLocation/SET_KEYWORDS",
       SET_IGNORE: "areaLocation/SET_IGNORE",
-      SET_SHOWMODAL: "pharmacies/SET_SHOWMODAL"
+      SET_SHOWMODAL: "pharmacies/SET_SHOWMODAL",
+      SET_CURRSTORE: "pharmacies/SET_CURRSTORE"
     }),
-    openInfoBox() {
-      this.showModal = !this.showModal;
+    openInfoBox(store) {
+      this.showModal = true;
+      this.SET_CURRSTORE(store);
     }
   },
 };

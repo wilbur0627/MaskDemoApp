@@ -4,7 +4,8 @@ const pharmacies = {
     namespaced: true,
     state: {
         stores: [],
-        showModal: false
+        showModal: false,
+        currStore: undefined
     },
     mutations: {
         SET_STORES(state, payload) {
@@ -12,6 +13,9 @@ const pharmacies = {
         },
         SET_SHOWMODAL(state, paylaod) {
             state.showModal = paylaod;
+        },
+        SET_CURRSTORE(state, payload) {
+            state.currStore = payload;
         }
     },
     actions: {

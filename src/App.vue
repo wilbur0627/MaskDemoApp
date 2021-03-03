@@ -13,7 +13,6 @@
 import AsideMenu from "@/components/AsideMenu.vue";
 import MaskMap from "@/components/MaskMap.vue";
 import Lightbox from "@/components/Lightbox.vue";
-import { mapGetters } from "vuex";
 import { fetchTest } from '@/api/pharmacies';
 
 export default {
@@ -27,9 +26,6 @@ export default {
     AsideMenu,
     MaskMap,
     Lightbox
-  },
-  computed: {
-    ...mapGetters(['getLocation', 'getStores', 'getCityList', 'getDistrictList'])
   },
   methods: {
   },
