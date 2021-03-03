@@ -32,7 +32,7 @@
     </div>
 
     <ul class="store-lists">
-      <li class="store-info wraps" v-for="store of stores" :key="store.id">
+      <li class="store-info wraps" v-for="store of stores" :key="store.id" @click="$emit('triggerMarkerPopup', store.id)">
         <h1>{{ store.name }}</h1>
 
         <div class="mask-info">

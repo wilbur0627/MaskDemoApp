@@ -9,7 +9,8 @@ export default {
   name: "MaskMap",
   data() {
     return  {
-      map: {}
+      map: {},
+      markers: []
     }
   },
   computed: {
@@ -26,6 +27,7 @@ export default {
       this.map.panTo(new L.LatLng(data.latitude, data.longitude));
     },
     stores(data) {
+      this.cleanMarkers();
       data.forEach((data) => this.addMarker(data));
     }
   },
@@ -48,7 +50,25 @@ export default {
         popupAnchor: [1, -34],
         shadowSize: [41, 41]
       }
-      L.marker([data.longitude, data.latitude], ICON).addTo(this.map).bindPopup(`<h2 class="popup-name>${data.name}</h2>"`);
+      const marker = L.marker([data.longitude, data.latitude], ICON).addTo(this.map).bindPopup(`<h2 class="popup-name>${data.name}</h2>"`);
+      marker.markerId = data.id;
+      marker.lng = data.longitude;
+      marker.lat = data.latitude;
+      this.markers.push(marker);
+    },
+    cleanMarkers() {
+      this.map.eachLayer((layer) => {
+        if (layer instanceof L.Marker) {
+          this.map.removeLayer(layer);
+        }
+      });
+      this.markers.length = 0;
+    },
+    triggerPopup(markerId) {
+      const marker = this.markers.find((data) => data.markerId === markerId);
+      console.log(marker);
+      this.map.flyTo(new L.LatLng(marker.lng, marker.lat), 15);
+      marker.openPopup();
     }
   }
 };

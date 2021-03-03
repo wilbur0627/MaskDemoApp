@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <!-- aside-menu 左側欄 -->
-    <AsideMenu />
+    <AsideMenu @triggerMarkerPopup="openPopup" ref="menu" />
     <!-- 地圖區塊 -->
-    <MaskMap />
+    <MaskMap ref="map" />
     <!-- 燈箱區塊 -->
     <Lightbox />
   </div>
@@ -28,6 +28,9 @@ export default {
     Lightbox
   },
   methods: {
+    openPopup(id) {
+      this.$refs.map.triggerPopup(id);
+    }
   },
   async mounted() {
     await this.$store.dispatch('areaLocation/fetchLocations');
