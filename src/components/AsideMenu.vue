@@ -154,7 +154,6 @@ export default {
   overflow-y: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
-
   &::-webkit-scrollbar {
     display: none;
   }
@@ -162,7 +161,6 @@ export default {
   .wraps {
     border-bottom: 1px solid #666;
     padding: 2rem;
-
     label {
       display: block;
       line-height: 2;
